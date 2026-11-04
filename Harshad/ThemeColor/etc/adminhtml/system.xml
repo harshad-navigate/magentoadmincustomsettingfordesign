@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="harshad_themecolor" translate="label" type="text" sortOrder="20"
+                 showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Theme Colors</label>
+            <tab>harshad</tab>
+            <resource>Harshad_ThemeColor::config</resource>
+
+            <group id="colors" translate="label" type="text" sortOrder="10"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Primary &amp; Secondary Colors</label>
+
+                <field id="enabled" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Custom Colors</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="primary" translate="label comment" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Primary Color</label>
+                    <comment>Buttons, links, highlights. Example: #1d4ed8</comment>
+                    <frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model>
+                    <backend_model>Harshad\ThemeColor\Model\Config\Backend\HexColor</backend_model>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+
+                <field id="secondary" translate="label comment" type="text" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Secondary Color</label>
+                    <comment>Secondary buttons, header/footer accents. Example: #374151</comment>
+                    <frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model>
+                    <backend_model>Harshad\ThemeColor\Model\Config\Backend\HexColor</backend_model>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

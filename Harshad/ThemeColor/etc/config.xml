@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <harshad_themecolor>
+            <colors>
+                <enabled>1</enabled>
+                <primary>#1d4ed8</primary>
+                <secondary>#374151</secondary>
+            </colors>
+        </harshad_themecolor>
+    </default>
+</config>

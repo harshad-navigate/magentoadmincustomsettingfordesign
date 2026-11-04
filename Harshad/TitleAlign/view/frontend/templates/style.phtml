@@ -1,0 +1,14 @@
+<?php
+declare(strict_types=1);
+
+use Harshad\TitleAlign\ViewModel\TitleStyle;
+use Magento\Framework\View\Element\Template;
+
+/** @var Template $block */
+/** @var TitleStyle $viewModel */
+$viewModel = $block->getData('view_model');
+$css = $viewModel->getCss();
+?>
+<?php if ($css): ?>
+    <style id="harshad-title-align"><?= /* @noEscape */ $css ?></style>
+<?php endif; ?>

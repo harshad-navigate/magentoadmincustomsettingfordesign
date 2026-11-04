@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Harshad_ThemeColor::theme_color"
+             title="Theme Colors"
+             translate="title"
+             module="Harshad_ThemeColor"
+             sortOrder="20"
+             parent="Harshad_TitleAlign::main"
+             action="adminhtml/system_config/edit/section/harshad_themecolor"
+             resource="Harshad_ThemeColor::config"/>
+    </menu>
+</config>

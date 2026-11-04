@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <harshad_titlealign>
+            <general><enabled>1</enabled></general>
+            <list_page><alignment>left</alignment></list_page>
+            <search_page><alignment>left</alignment></search_page>
+            <pdp_page><alignment>left</alignment></pdp_page>
+            <cart_page><alignment>left</alignment></cart_page>
+            <checkout_page><alignment>left</alignment></checkout_page>
+        </harshad_titlealign>
+    </default>
+</config>

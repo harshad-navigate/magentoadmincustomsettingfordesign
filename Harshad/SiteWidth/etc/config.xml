@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <harshad_sitewidth>
+            <container>
+                <enabled>1</enabled>
+                <max_width>1280</max_width>
+                <unit>px</unit>
+                <padding>16</padding>
+            </container>
+        </harshad_sitewidth>
+    </default>
+</config>

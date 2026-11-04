@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <harshad_fontfamily>
+            <general>
+                <enabled>0</enabled>
+            </general>
+            <google>
+                <fonts>Poppins</fonts>
+            </google>
+            <custom>
+                <urls></urls>
+            </custom>
+            <apply>
+                <body_font>Poppins</body_font>
+                <heading_font>Poppins</heading_font>
+            </apply>
+        </harshad_fontfamily>
+    </default>
+</config>

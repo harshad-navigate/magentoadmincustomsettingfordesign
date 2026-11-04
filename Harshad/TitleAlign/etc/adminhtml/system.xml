@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="harshad" translate="label" sortOrder="55">
+            <label>Harshad</label>
+        </tab>
+        <section id="harshad_titlealign" translate="label" type="text" sortOrder="10"
+                 showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Title Alignment</label>
+            <tab>harshad</tab>
+            <resource>Harshad_TitleAlign::config</resource>
+
+            <group id="general" translate="label" type="text" sortOrder="5"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Title Alignment</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+
+            <group id="list_page" translate="label" type="text" sortOrder="10"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>List Page (Category)</label>
+                <field id="alignment" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title Alignment</label>
+                    <source_model>Harshad\TitleAlign\Model\Config\Source\Alignment</source_model>
+                </field>
+            </group>
+
+            <group id="search_page" translate="label" type="text" sortOrder="20"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Search Page</label>
+                <field id="alignment" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title Alignment</label>
+                    <source_model>Harshad\TitleAlign\Model\Config\Source\Alignment</source_model>
+                </field>
+            </group>
+
+            <group id="pdp_page" translate="label" type="text" sortOrder="30"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Product Detail Page (PDP)</label>
+                <field id="alignment" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title Alignment</label>
+                    <source_model>Harshad\TitleAlign\Model\Config\Source\Alignment</source_model>
+                </field>
+            </group>
+
+            <group id="cart_page" translate="label" type="text" sortOrder="40"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Cart Page</label>
+                <field id="alignment" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title Alignment</label>
+                    <source_model>Harshad\TitleAlign\Model\Config\Source\Alignment</source_model>
+                </field>
+            </group>
+
+            <group id="checkout_page" translate="label" type="text" sortOrder="50"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Checkout Page</label>
+                <field id="alignment" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title Alignment</label>
+                    <source_model>Harshad\TitleAlign\Model\Config\Source\Alignment</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Harshad_TitleAlign::main"
+             title="Harshad"
+             translate="title"
+             module="Harshad_TitleAlign"
+             sortOrder="55"
+             resource="Harshad_TitleAlign::config"/>
+
+        <add id="Harshad_TitleAlign::title_align"
+             title="Title Alignment"
+             translate="title"
+             module="Harshad_TitleAlign"
+             sortOrder="10"
+             parent="Harshad_TitleAlign::main"
+             action="adminhtml/system_config/edit/section/harshad_titlealign"
+             resource="Harshad_TitleAlign::config"/>
+    </menu>
+</config>

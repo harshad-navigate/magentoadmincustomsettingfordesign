@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Harshad_FontFamily::font_family"
+             title="Font Family"
+             translate="title"
+             module="Harshad_FontFamily"
+             sortOrder="40"
+             parent="Harshad_TitleAlign::main"
+             action="adminhtml/system_config/edit/section/harshad_fontfamily"
+             resource="Harshad_FontFamily::config"/>
+    </menu>
+</config>

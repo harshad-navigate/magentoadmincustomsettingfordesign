@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="harshad_sitewidth" translate="label" type="text" sortOrder="30"
+                 showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Site Width</label>
+            <tab>harshad</tab>
+            <resource>Harshad_SiteWidth::config</resource>
+
+            <group id="container" translate="label" type="text" sortOrder="10"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Site Container</label>
+
+                <field id="enabled" translate="label comment" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Custom Container Width</label>
+                    <comment>This setting is not applied on Full Width pages (CMS / Category / Product full width).</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="max_width" translate="label comment" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Max Width</label>
+                    <comment>Number only. Example: 1280 (px) or 90 (%)</comment>
+                    <validate>validate-number validate-greater-than-zero required-entry</validate>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+
+                <field id="unit" translate="label" type="select" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Unit</label>
+                    <source_model>Harshad\SiteWidth\Model\Config\Source\Unit</source_model>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+
+                <field id="padding" translate="label comment" type="text" sortOrder="40"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Side Padding (px)</label>
+                    <comment>Left/right space inside container. Example: 16</comment>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

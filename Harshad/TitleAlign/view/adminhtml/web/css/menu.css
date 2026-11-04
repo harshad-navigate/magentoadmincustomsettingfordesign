@@ -1,0 +1,4 @@
+#menu-harshad-titlealign-main > a:before {
+    content: '\e610';
+    font-family: 'Admin Icons';
+}

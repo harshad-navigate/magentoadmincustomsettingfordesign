@@ -1,0 +1,29 @@
+<?php
+declare(strict_types=1);
+
+use Harshad\FontFamily\ViewModel\FontFamily;
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+/** @var Template $block */
+/** @var Escaper $escaper */
+/** @var FontFamily $viewModel */
+$viewModel = $block->getData('view_model');
+
+if (!$viewModel->isEnabled()) {
+    return;
+}
+
+$stylesheets = $viewModel->getStylesheets();
+$css = $viewModel->getCss();
+?>
+<?php foreach ($viewModel->getPreconnects() as $item): ?>
+    <link rel="preconnect" href="<?= $escaper->escapeUrl($item['href']) ?>"<?= $item['crossorigin'] ? ' crossorigin' : '' ?>>
+<?php endforeach; ?>
+<?php foreach ($stylesheets as $url): ?>
+    <link rel="stylesheet" href="<?= $escaper->escapeUrl($url) ?>" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="<?= $escaper->escapeUrl($url) ?>"></noscript>
+<?php endforeach; ?>
+<?php if ($css): ?>
+    <style id="harshad-font-family"><?= /* @noEscape */ $css ?></style>
+<?php endif; ?>
