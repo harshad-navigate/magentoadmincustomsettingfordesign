@@ -1,0 +1,14 @@
+<?php
+declare(strict_types=1);
+
+use Harshad\Buttons\ViewModel\Buttons;
+use Magento\Framework\View\Element\Template;
+
+/** @var Template $block */
+/** @var Buttons $viewModel */
+$viewModel = $block->getData('view_model');
+$css = $viewModel->getCss();
+?>
+<?php if ($css): ?>
+    <style id="harshad-buttons"><?= /* @noEscape */ $css ?></style>
+<?php endif; ?>

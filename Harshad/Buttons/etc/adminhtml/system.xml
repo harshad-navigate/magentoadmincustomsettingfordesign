@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="harshad_buttons" translate="label" type="text" sortOrder="60"
+                 showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Buttons</label>
+            <tab>harshad</tab>
+            <resource>Harshad_Buttons::config</resource>
+
+            <group id="general" translate="label" type="text" sortOrder="10"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Custom Button Styles</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+
+            <group id="primary" translate="label comment" type="text" sortOrder="20"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Primary Button Colors</label>
+                <comment>Leave a field empty to keep the theme default color.</comment>
+
+                <field id="normal_bg" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1"><label>Normal - Background</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="normal_text" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1"><label>Normal - Text</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="normal_border" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1"><label>Normal - Border</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+
+                <field id="hover_bg" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1"><label>Hover - Background</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="hover_text" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1"><label>Hover - Text</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="hover_border" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1"><label>Hover - Border</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+
+                <field id="focus_bg" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1"><label>Focus - Background</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="focus_text" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1"><label>Focus - Text</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="focus_border" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1"><label>Focus - Border</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+
+                <field id="active_bg" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1"><label>Active - Background</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="active_text" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1"><label>Active - Text</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="active_border" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1"><label>Active - Border</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+
+                <field id="disabled_bg" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1"><label>Disabled - Background</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="disabled_text" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1"><label>Disabled - Text</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="disabled_border" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1"><label>Disabled - Border</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+            </group>
+
+            <group id="secondary" translate="label comment" type="text" sortOrder="30"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Secondary Button Colors</label>
+                <comment>Leave a field empty to keep the theme default color.</comment>
+
+                <field id="normal_bg" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1"><label>Normal - Background</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="normal_text" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1"><label>Normal - Text</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="normal_border" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1"><label>Normal - Border</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+
+                <field id="hover_bg" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1"><label>Hover - Background</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="hover_text" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1"><label>Hover - Text</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="hover_border" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1"><label>Hover - Border</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+
+                <field id="focus_bg" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1"><label>Focus - Background</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="focus_text" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1"><label>Focus - Text</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="focus_border" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1"><label>Focus - Border</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+
+                <field id="active_bg" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1"><label>Active - Background</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="active_text" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1"><label>Active - Text</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="active_border" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1"><label>Active - Border</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+
+                <field id="disabled_bg" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1"><label>Disabled - Background</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="disabled_text" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1"><label>Disabled - Text</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+                <field id="disabled_border" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1"><label>Disabled - Border</label><frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model><backend_model>Harshad\Buttons\Model\Config\Backend\OptionalHexColor</backend_model><depends><field id="general/enabled">1</field></depends></field>
+            </group>
+
+            <group id="typography" translate="label comment" type="text" sortOrder="40"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Button Typography</label>
+                <comment>Applies to both Primary and Secondary buttons. Leave empty to keep the theme default.</comment>
+
+                <field id="desktop_size" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Desktop Font Size (px)</label>
+                    <comment>Applies on screens 768px and wider. Example: 16</comment>
+                    <validate>validate-number validate-greater-than-zero</validate>
+                    <depends><field id="general/enabled">1</field></depends>
+                </field>
+                <field id="mobile_size" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Mobile Font Size (px)</label>
+                    <comment>Applies on screens below 768px. Example: 14</comment>
+                    <validate>validate-number validate-greater-than-zero</validate>
+                    <depends><field id="general/enabled">1</field></depends>
+                </field>
+                <field id="font_weight" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Font Weight</label>
+                    <source_model>Harshad\Buttons\Model\Config\Source\FontWeight</source_model>
+                    <depends><field id="general/enabled">1</field></depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
