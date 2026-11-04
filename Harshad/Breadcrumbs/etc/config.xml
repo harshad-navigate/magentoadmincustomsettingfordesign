@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <harshad_breadcrumbs>
+            <style>
+                <enabled>1</enabled>
+                <desktop_size>14</desktop_size>
+                <mobile_size>12</mobile_size>
+                <link_color>#6b7280</link_color>
+                <link_hover_color>#111827</link_hover_color>
+                <current_color>#111827</current_color>
+                <font_weight>400</font_weight>
+            </style>
+        </harshad_breadcrumbs>
+    </default>
+</config>

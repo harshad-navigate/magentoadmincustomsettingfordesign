@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="harshad_breadcrumbs" translate="label" type="text" sortOrder="50"
+                 showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Breadcrumbs</label>
+            <tab>harshad</tab>
+            <resource>Harshad_Breadcrumbs::config</resource>
+
+            <group id="style" translate="label" type="text" sortOrder="10"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Breadcrumbs Style</label>
+
+                <field id="enabled" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Custom Breadcrumbs Style</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="desktop_size" translate="label comment" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Desktop Font Size (px)</label>
+                    <comment>Applies on screens 768px and wider. Example: 14</comment>
+                    <validate>validate-number validate-greater-than-zero required-entry</validate>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+
+                <field id="mobile_size" translate="label comment" type="text" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Mobile Font Size (px)</label>
+                    <comment>Applies on screens below 768px. Example: 12</comment>
+                    <validate>validate-number validate-greater-than-zero required-entry</validate>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+
+                <field id="link_color" translate="label comment" type="text" sortOrder="40"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Link Color</label>
+                    <comment>Color of clickable items (Home, categories).</comment>
+                    <frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model>
+                    <backend_model>Harshad\ThemeColor\Model\Config\Backend\HexColor</backend_model>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+
+                <field id="link_hover_color" translate="label comment" type="text" sortOrder="45"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Link Hover Color</label>
+                    <comment>Color of clickable items (Home, categories) when the mouse is over them.</comment>
+                    <frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model>
+                    <backend_model>Harshad\ThemeColor\Model\Config\Backend\HexColor</backend_model>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+
+                <field id="current_color" translate="label comment" type="text" sortOrder="50"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Current Page Color</label>
+                    <comment>Color of the last item (current page).</comment>
+                    <frontend_model>Harshad\ThemeColor\Block\Adminhtml\System\Config\ColorPicker</frontend_model>
+                    <backend_model>Harshad\ThemeColor\Model\Config\Backend\HexColor</backend_model>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+
+                <field id="font_weight" translate="label" type="select" sortOrder="60"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Font Weight</label>
+                    <source_model>Harshad\Breadcrumbs\Model\Config\Source\FontWeight</source_model>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

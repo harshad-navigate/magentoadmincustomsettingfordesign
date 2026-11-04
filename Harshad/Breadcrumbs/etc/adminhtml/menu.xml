@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Harshad_Breadcrumbs::breadcrumbs"
+             title="Breadcrumbs"
+             translate="title"
+             module="Harshad_Breadcrumbs"
+             sortOrder="50"
+             parent="Harshad_TitleAlign::main"
+             action="adminhtml/system_config/edit/section/harshad_breadcrumbs"
+             resource="Harshad_Breadcrumbs::config"/>
+    </menu>
+</config>
