@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- Default theme footer blocks (Hyva + Luma) -->
+        <referenceBlock name="footer-content" remove="true"/>
+        <referenceBlock name="footer" remove="true"/>
+        <referenceBlock name="footer_links" remove="true"/>
+        <referenceBlock name="copyright" remove="true"/>
+        <referenceBlock name="form.subscribe" remove="true"/>
+        <referenceBlock name="footer-newsletter" remove="true"/>
+
+        <referenceContainer name="footer-container">
+            <block class="Magento\Framework\View\Element\Template"
+                   name="harshad.footer"
+                   template="Harshad_Footer::footer.phtml"
+                   before="-">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Harshad\Footer\ViewModel\Footer</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

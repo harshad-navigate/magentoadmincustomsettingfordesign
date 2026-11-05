@@ -1,0 +1,247 @@
+<?php
+declare(strict_types=1);
+
+use Harshad\Slider\Block\Slider;
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Helper\SecureHtmlRenderer;
+
+/** @var Slider $block */
+/** @var Escaper $escaper */
+/** @var SecureHtmlRenderer $secureRenderer */
+
+if (!$block->isAllowed()) {
+    return;
+}
+
+$vm = $block->getViewModel();
+$slides = $vm->getSlides();
+$count = count($slides);
+$id = $block->nextId();
+$nav = $vm->getNavType();
+$showArrows = $count > 1 && in_array($nav, ['arrows', 'both'], true);
+$showDots = $count > 1 && in_array($nav, ['dots', 'both'], true);
+$allowedHtml = ['b', 'strong', 'i', 'em', 'br', 'span'];
+
+$chevronLeft = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>';
+$chevronRight = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>';
+?>
+<?php if ($block->shouldPrintCss()): ?>
+    <style id="harshad-slider-css">
+        .hs{position:relative;overflow:hidden;width:100%}
+        .hs--full{width:100vw;max-width:100vw;margin-left:calc(50% - 50vw)}
+        .hs-track{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+        .hs-track::-webkit-scrollbar{display:none}
+        .hs-slide{position:relative;flex:0 0 100%;min-width:0;scroll-snap-align:start;scroll-snap-stop:always;aspect-ratio:var(--hs-ar-m)}
+        @media (min-width:768px){.hs-slide{aspect-ratio:var(--hs-ar-d)}}
+        .hs-slide picture{display:block;width:100%;height:100%}
+        .hs-slide img{display:block;width:100%;height:100%;object-fit:cover}
+        .hs-ov{position:absolute;inset:0;background:#000;pointer-events:none}
+        .hs-cover{position:absolute;inset:0;z-index:1}
+        .hs-c{position:absolute;inset:0;z-index:2;display:flex;padding:24px;box-sizing:border-box;pointer-events:none}
+        .hs-box{pointer-events:auto;width:var(--w,50%);max-width:100%}
+        @media (max-width:767px){.hs-box{width:100%}.hs-c{padding:16px}}
+        .hs-h{margin:0 0 12px;font-size:clamp(1.5rem,4vw,3rem);line-height:1.15;font-weight:700;color:inherit}
+        .hs-t{margin:0 0 16px;font-size:clamp(1rem,1.6vw,1.25rem);line-height:1.5;color:inherit}
+        .hs-b .btn{display:inline-block}
+        .hs-arrow{position:absolute;z-index:3;width:40px;height:40px;padding:0;border:0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;background:var(--hs-ab);color:var(--hs-ac);opacity:.9}
+        .hs-arrow:hover{opacity:1}
+        .hs-arrow:disabled{opacity:.35;cursor:default}
+        .hs-noam .hs-arrow{display:none}
+        @media (min-width:768px){.hs-noam .hs-arrow{display:flex}}
+        .hs-ap-sides .hs-prev{left:12px;top:50%;transform:translateY(-50%)}
+        .hs-ap-sides .hs-next{right:12px;top:50%;transform:translateY(-50%)}
+        .hs-ap-bl .hs-prev{left:12px;bottom:var(--hs-abot)}
+        .hs-ap-bl .hs-next{left:60px;bottom:var(--hs-abot)}
+        .hs-ap-bc .hs-prev{left:50%;margin-left:-48px;bottom:var(--hs-abot)}
+        .hs-ap-bc .hs-next{left:50%;margin-left:8px;bottom:var(--hs-abot)}
+        .hs-ap-br .hs-prev{right:60px;bottom:var(--hs-abot)}
+        .hs-ap-br .hs-next{right:12px;bottom:var(--hs-abot)}
+        .hs-dots{position:absolute;z-index:3;bottom:16px;display:flex;gap:8px}
+        .hs-dp-c .hs-dots{left:50%;transform:translateX(-50%)}
+        .hs-dp-l .hs-dots{left:16px}
+        .hs-dp-r .hs-dots{right:16px}
+        .hs-dot{width:10px;height:10px;padding:0;border:0;border-radius:50%;cursor:pointer;background:var(--hs-dc);opacity:.5}
+        .hs-dot[aria-current="true"]{background:var(--hs-da);opacity:1}
+    </style>
+<?php endif; ?>
+
+    <section id="<?= $escaper->escapeHtmlAttr($id) ?>"
+             class="<?= $escaper->escapeHtmlAttr($vm->getRootClasses()) ?>"
+             style="<?= $escaper->escapeHtmlAttr($vm->getStyleVars()) ?>"
+             data-hs="1"
+             data-loop="<?= $vm->isLoop() ? '1' : '0' ?>"
+             data-autoplay="<?= (int) $vm->getAutoplayMs() ?>"
+             data-pause="<?= $vm->isPauseOnHover() ? '1' : '0' ?>"
+             role="region"
+             aria-roledescription="carousel"
+             aria-label="<?= $escaper->escapeHtmlAttr(__('Slider')) ?>">
+        <div class="hs-track">
+            <?php foreach ($slides as $i => $s): ?>
+                <?php
+                $target = $s['new_tab'] ? ' target="_blank" rel="noopener noreferrer"' : '';
+                $hasContent = $s['heading'] !== '' || $s['text'] !== '' || ($s['button_text'] !== '' && $s['button_url'] !== '');
+                $first = ($i === 0);
+                $bgStyle = $s['bg'] !== '' ? ' style="background:' . $escaper->escapeHtmlAttr($s['bg']) . '"' : '';
+                ?>
+                <div class="hs-slide" role="group" aria-roledescription="slide"
+                     aria-label="<?= (int) ($i + 1) ?> / <?= (int) $count ?>"<?= /* @noEscape */ $bgStyle ?>>
+                    <?php if ($s['desktop'] !== ''): ?>
+                        <picture>
+                            <?php if ($s['mobile'] !== ''): ?>
+                                <source media="(max-width:767px)" srcset="<?= $escaper->escapeUrl($s['mobile']) ?>">
+                            <?php endif; ?>
+                            <img src="<?= $escaper->escapeUrl($s['desktop']) ?>"
+                                 alt="<?= $escaper->escapeHtmlAttr($s['alt']) ?>"
+                                 width="1920" height="600"
+                                 decoding="async"
+                                <?= $first ? 'fetchpriority="high"' : 'loading="lazy"' ?>>
+                        </picture>
+                    <?php endif; ?>
+
+                    <?php if ($s['overlay'] > 0 && $s['desktop'] !== ''): ?>
+                        <span class="hs-ov" style="opacity:<?= (int) $s['overlay'] / 100 ?>"></span>
+                    <?php endif; ?>
+
+                    <?php if ($s['link'] !== ''): ?>
+                        <a class="hs-cover" href="<?= $escaper->escapeUrl($s['link']) ?>"<?= /* @noEscape */ $target ?>
+                           aria-label="<?= $escaper->escapeHtmlAttr($s['heading'] !== '' ? $s['heading'] : __('Open slide')) ?>"></a>
+                    <?php endif; ?>
+
+                    <?php if ($hasContent): ?>
+                        <div class="hs-c"
+                             style="justify-content:<?= $escaper->escapeHtmlAttr($s['justify']) ?>;align-items:<?= $escaper->escapeHtmlAttr($s['align_items']) ?>">
+                            <div class="hs-box"
+                                 style="--w:<?= (int) $s['width'] ?>%;text-align:<?= $escaper->escapeHtmlAttr($s['text_align']) ?>;color:<?= $escaper->escapeHtmlAttr($s['color']) ?>">
+                                <?php if ($s['heading'] !== ''): ?>
+                                    <h2 class="hs-h"><?= $escaper->escapeHtml($s['heading']) ?></h2>
+                                <?php endif; ?>
+                                <?php if ($s['text'] !== ''): ?>
+                                    <p class="hs-t"><?= /* @noEscape */ nl2br($escaper->escapeHtml($s['text'], $allowedHtml)) ?></p>
+                                <?php endif; ?>
+                                <?php if ($s['button_text'] !== '' && $s['button_url'] !== ''): ?>
+                                    <div class="hs-b" style="text-align:<?= $escaper->escapeHtmlAttr($s['btn_align']) ?>">
+                                        <a class="<?= $escaper->escapeHtmlAttr($s['button_class']) ?>"
+                                           href="<?= $escaper->escapeUrl($s['button_url']) ?>"<?= /* @noEscape */ $target ?>>
+                                            <?= $escaper->escapeHtml($s['button_text']) ?>
+                                        </a>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <?php if ($showArrows): ?>
+            <button type="button" class="hs-arrow hs-prev" aria-label="<?= $escaper->escapeHtmlAttr(__('Previous slide')) ?>"><?= /* @noEscape */ $chevronLeft ?></button>
+            <button type="button" class="hs-arrow hs-next" aria-label="<?= $escaper->escapeHtmlAttr(__('Next slide')) ?>"><?= /* @noEscape */ $chevronRight ?></button>
+        <?php endif; ?>
+
+        <?php if ($showDots): ?>
+            <div class="hs-dots">
+                <?php for ($k = 0; $k < $count; $k++): ?>
+                    <button type="button" class="hs-dot" aria-current="<?= $k === 0 ? 'true' : 'false' ?>"
+                            aria-label="<?= $escaper->escapeHtmlAttr(__('Go to slide %1', $k + 1)) ?>"></button>
+                <?php endfor; ?>
+            </div>
+        <?php endif; ?>
+    </section>
+
+<?php if ($count > 1 && $block->shouldPrintJs()): ?>
+    <?php
+    $js = <<<'JS'
+(function(){
+function init(root){
+    if(root.__hs){return;}
+    root.__hs=1;
+    var track=root.querySelector('.hs-track');
+    var slides=[].slice.call(track.children);
+    var n=slides.length;
+    if(n<2){return;}
+    var loop=root.getAttribute('data-loop')==='1';
+    var delay=parseInt(root.getAttribute('data-autoplay'),10)||0;
+    var hoverPause=root.getAttribute('data-pause')==='1';
+    var dots=[].slice.call(root.querySelectorAll('.hs-dot'));
+    var prevBtn=root.querySelector('.hs-prev');
+    var nextBtn=root.querySelector('.hs-next');
+    var off=0,idx=0,timer=null,paused=false,visible=true,t;
+    if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){delay=0;}
+
+    if(loop){
+        var f=slides[0].cloneNode(true),l=slides[n-1].cloneNode(true);
+        [f,l].forEach(function(c){
+            c.setAttribute('aria-hidden','true');
+            c.setAttribute('inert','');
+            [].forEach.call(c.querySelectorAll('img'),function(im){
+                im.setAttribute('loading','lazy');
+                im.removeAttribute('fetchpriority');
+            });
+        });
+        track.appendChild(f);
+        track.insertBefore(l,track.firstChild);
+        off=1;
+        track.scrollLeft=track.clientWidth;
+    }
+
+    function w(){return track.clientWidth;}
+    function pos(i,smooth){track.scrollTo({left:(i+off)*w(),behavior:smooth?'smooth':'auto'});}
+    function mark(){
+        dots.forEach(function(d,k){d.setAttribute('aria-current',k===idx?'true':'false');});
+        if(!loop){
+            if(prevBtn){prevBtn.disabled=idx===0;}
+            if(nextBtn){nextBtn.disabled=idx===n-1;}
+        }
+    }
+    function next(){if(!loop&&idx>=n-1){pos(0,true);}else{pos(idx+1,true);}}
+    function prev(){pos(idx-1,true);}
+    function jump(p){
+        track.style.scrollSnapType='none';
+        track.scrollLeft=p*w();
+        requestAnimationFrame(function(){track.style.scrollSnapType='';});
+    }
+    function settle(){
+        var p=Math.round(track.scrollLeft/(w()||1));
+        if(loop){
+            if(p<=0){jump(n);p=n;}
+            else if(p>=n+1){jump(1);p=1;}
+        }
+        idx=Math.max(0,Math.min(n-1,p-off));
+        mark();
+        restart();
+    }
+    function start(){if(!delay||timer||paused||!visible||document.hidden){return;}timer=setInterval(next,delay);}
+    function stop(){if(timer){clearInterval(timer);timer=null;}}
+    function restart(){stop();start();}
+
+    track.addEventListener('scroll',function(){clearTimeout(t);t=setTimeout(settle,90);},{passive:true});
+    if(prevBtn){prevBtn.addEventListener('click',prev);}
+    if(nextBtn){nextBtn.addEventListener('click',next);}
+    dots.forEach(function(d,k){d.addEventListener('click',function(){pos(k,true);});});
+    window.addEventListener('resize',function(){pos(idx,false);},{passive:true});
+    document.addEventListener('visibilitychange',function(){if(document.hidden){stop();}else{start();}});
+
+    if(hoverPause){
+        root.addEventListener('mouseenter',function(){paused=true;stop();});
+        root.addEventListener('mouseleave',function(){paused=false;start();});
+    }
+    root.addEventListener('focusin',function(){paused=true;stop();});
+    root.addEventListener('focusout',function(){paused=false;start();});
+
+    if('IntersectionObserver' in window){
+        new IntersectionObserver(function(e){
+            visible=e[0].isIntersecting;
+            if(visible){start();}else{stop();}
+        },{threshold:0.2}).observe(root);
+    }
+
+    mark();
+    (window.requestIdleCallback||function(fn){setTimeout(fn,1500);})(start);
+}
+function run(){[].forEach.call(document.querySelectorAll('.hs[data-hs]'),init);}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',run);}else{run();}
+})();
+JS;
+    ?>
+    <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $js, false) ?>
+<?php endif; ?>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Harshad_Slider::slider"
+             title="Slider"
+             translate="title"
+             module="Harshad_Slider"
+             sortOrder="80"
+             parent="Harshad_TitleAlign::main"
+             action="adminhtml/system_config/edit/section/harshad_slider"
+             resource="Harshad_Slider::config"/>
+    </menu>
+</config>

@@ -1,0 +1,148 @@
+<?php
+declare(strict_types=1);
+
+use Harshad\Footer\ViewModel\Footer;
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Helper\SecureHtmlRenderer;
+
+/** @var Template $block */
+/** @var Escaper $escaper */
+/** @var SecureHtmlRenderer $secureRenderer */
+/** @var Footer $viewModel */
+$viewModel = $block->getData('view_model');
+
+if (!$viewModel->isEnabled()) {
+    return;
+}
+
+$rows = $viewModel->getRows();
+$allowedHtml = ['b', 'strong', 'i', 'em', 'br', 'a', 'p', 'span'];
+$copyright = $viewModel->getCopyright();
+?>
+    <style id="harshad-footer-css"><?= /* @noEscape */ $viewModel->getCss() ?></style>
+
+    <footer class="hf-footer" id="harshad-footer">
+        <div class="container">
+            <?php foreach ($rows as $row): ?>
+                <div class="hf-rw">
+                    <div class="hf-row hf-r<?= (int) $row['index'] ?>">
+                        <?php foreach ($row['sections'] as $section): ?>
+                            <?php
+                            $isAcc = $row['accordion'] > 0 && $section['title'] !== '';
+                            $accClass = $isAcc ? ' hf-acc' . ($row['accordion'] === 2 ? ' hf-acc-t' : '') : '';
+                            ?>
+                            <div class="hf-col hf-col-<?= (int) $row['index'] ?>-<?= (int) $section['index'] ?><?= $accClass ?>">
+                                <?php if ($section['title'] !== ''): ?>
+                                    <h3 class="hf-title"<?= $isAcc ? ' role="button" tabindex="0" aria-expanded="false"' : '' ?>>
+                                        <?= $escaper->escapeHtml($section['title']) ?>
+                                    </h3>
+                                <?php endif; ?>
+
+                                <div class="hf-body">
+                                    <?php if (in_array($section['type'], ['text', 'image'], true) && $section['image'] !== ''): ?>
+                                        <?php if ($section['image_link'] !== ''): ?>
+                                            <a href="<?= $escaper->escapeUrl($section['image_link']) ?>">
+                                        <?php endif; ?>
+                                        <img src="<?= $escaper->escapeUrl($section['image']) ?>"
+                                             alt="<?= $escaper->escapeHtmlAttr($section['title']) ?>"
+                                             loading="lazy"
+                                            <?= $section['image_width'] > 0 ? 'width="' . (int) $section['image_width'] . '"' : '' ?>/>
+                                        <?php if ($section['image_link'] !== ''): ?>
+                                            </a>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+
+                                    <?php if (in_array($section['type'], ['text', 'newsletter'], true) && $section['content'] !== ''): ?>
+                                        <p><?= /* @noEscape */ nl2br($escaper->escapeHtml($section['content'], $allowedHtml)) ?></p>
+                                    <?php endif; ?>
+
+                                    <?php if ($section['type'] === 'links'): ?>
+                                        <ul class="hf-list">
+                                            <?php foreach ($section['links'] as $link): ?>
+                                                <li>
+                                                    <a href="<?= $escaper->escapeUrl($link['url']) ?>"
+                                                        <?= $link['external'] ? 'target="_blank" rel="noopener noreferrer"' : '' ?>>
+                                                        <?= $escaper->escapeHtml($link['label']) ?>
+                                                    </a>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
+
+                                    <?php if ($section['type'] === 'social'): ?>
+                                        <ul class="hf-social">
+                                            <?php foreach ($section['links'] as $link): ?>
+                                                <li>
+                                                    <a href="<?= $escaper->escapeUrl($link['url']) ?>"
+                                                       target="_blank" rel="noopener noreferrer">
+                                                        <?= $escaper->escapeHtml($link['label']) ?>
+                                                    </a>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
+
+                                    <?php if ($section['type'] === 'newsletter'): ?>
+                                        <form class="hf-nl" action="<?= $escaper->escapeUrl($viewModel->getNewsletterAction()) ?>" method="post">
+                                            <input type="hidden" name="form_key" value="<?= $escaper->escapeHtmlAttr($viewModel->getFormKey()) ?>"/>
+                                            <input type="email" name="email" required
+                                                   aria-label="<?= $escaper->escapeHtmlAttr(__('Email')) ?>"
+                                                   placeholder="<?= $escaper->escapeHtmlAttr($viewModel->getNewsletterPlaceholder()) ?>"/>
+                                            <button type="submit" class="btn btn-primary">
+                                                <?= $escaper->escapeHtml($viewModel->getNewsletterButton()) ?>
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
+
+                                    <?php if ($section['type'] === 'payment'): ?>
+                                        <div class="hf-pay">
+                                            <?php foreach ($viewModel->getPaymentIcons() as $icon): ?>
+                                                <img src="<?= $escaper->escapeUrl($icon) ?>" alt="" loading="lazy"/>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <?php if ($copyright !== ''): ?>
+            <div class="hf-bottom">
+                <div class="container">
+                    <?= /* @noEscape */ nl2br($escaper->escapeHtml($copyright, $allowedHtml)) ?>
+                </div>
+            </div>
+        <?php endif; ?>
+    </footer>
+
+<?php if ($viewModel->hasAccordion()): ?>
+    <?php
+    $js = "(function(){
+        var root=document.getElementById('harshad-footer');
+        if(!root){return;}
+        var mqMobile=window.matchMedia('(max-width:767px)');
+        var mqTablet=window.matchMedia('(max-width:1023px)');
+        function toggle(title){
+            var col=title.parentNode;
+            var active=col.classList.contains('hf-acc-t')?mqTablet.matches:mqMobile.matches;
+            if(!active){return;}
+            var open=col.classList.toggle('is-open');
+            title.setAttribute('aria-expanded',open?'true':'false');
+        }
+        root.addEventListener('click',function(e){
+            var t=e.target.closest('.hf-acc > .hf-title');
+            if(t){toggle(t);}
+        });
+        root.addEventListener('keydown',function(e){
+            if(e.key!=='Enter'&&e.key!==' '){return;}
+            var t=e.target.closest('.hf-acc > .hf-title');
+            if(t){e.preventDefault();toggle(t);}
+        });
+    })();";
+    ?>
+    <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $js, false) ?>
+<?php endif; ?>
